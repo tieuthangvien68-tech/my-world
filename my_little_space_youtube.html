@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Little Space ♡</title>
+<style>
+:root{--pink:#ff7e9f;--pink2:#ffb4b8;--pale:#fff0f4;--ink:#655b70;--muted:#b58e9a;--line:#ffd9e1;--white:#fff}
+body[data-theme="lavender"]{--pink:#a58bdf;--pink2:#c8b8f0;--pale:#f5f0ff;--ink:#615875;--muted:#a397bd;--line:#e2d8fb}
+body[data-theme="mint"]{--pink:#56bda5;--pink2:#9cdece;--pale:#edfbf6;--ink:#4d6963;--muted:#8cafa5;--line:#ccefe5}
+body[data-theme="sky"]{--pink:#65aee8;--pink2:#a8d5f5;--pale:#eff8ff;--ink:#536879;--muted:#91adbf;--line:#d5ecfc}
+body[data-theme="peach"]{--pink:#f39b70;--pink2:#f7c1a6;--pale:#fff4ed;--ink:#765f55;--muted:#bd9a8a;--line:#ffe0cf}
+*{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--ink);font-family:Nunito,"Segoe UI",Arial,sans-serif}
+header{text-align:center;padding:25px 18px 12px}h1{margin:0;color:var(--pink);font-size:clamp(23px,3vw,32px);font-weight:900;letter-spacing:.4px}header p{margin:7px 0 0;color:#c77f94}
+.topbar{margin:0 2.3% 18px;background:#fff;border:2px solid var(--pink2);border-radius:23px;box-shadow:0 4px 0 color-mix(in srgb, var(--pink2) 40%, white);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;font-weight:700}
+
+.top-weather{display:flex;align-items:center;gap:8px;min-width:0;max-width:100%;padding:6px 9px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--pale) 72%,white);font-weight:600}
+.top-weather-icon{font-size:23px;line-height:1;flex:none}
+.top-weather-copy{display:flex;flex-direction:column;gap:2px;min-width:0;max-width:180px}
+.top-weather-copy strong{font-size:12px;color:var(--pink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-weather-copy small{font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.top-weather-stat{font-size:11px;white-space:nowrap;padding:5px 6px;border-radius:9px;background:#fff;color:var(--ink)}
+.weather-refresh{flex:none;border:0;border-radius:9px;background:var(--pink);color:#fff;width:27px;height:27px;cursor:pointer;font-weight:900;font-size:17px;line-height:1}
+@media(max-width:600px){.top-weather{order:5;width:100%;justify-content:space-between}.top-weather-copy{flex:1;max-width:none}.top-weather-copy small{max-width:100%}.top-weather-stat{font-size:10px;padding:5px}.top-weather-icon{font-size:21px}}
+.theme-wrap{position:relative}.theme-toggle{border:1px solid var(--line);background:var(--pale);color:var(--pink);padding:10px 13px;border-radius:12px;font-weight:800;cursor:pointer}.theme-menu{position:absolute;z-index:20;right:0;top:calc(100% + 8px);width:220px;background:#fff;border:2px solid var(--pink2);border-radius:15px;padding:12px;box-shadow:0 8px 24px #8d5b6b22}.theme-label{display:block;font-size:12px;color:var(--muted);font-weight:800;margin-bottom:9px}.theme-options{display:grid;gap:6px}.theme-options button{display:flex;align-items:center;gap:9px;width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);padding:8px;text-align:left;cursor:pointer}.theme-options button:hover,.theme-options button.active{background:var(--pale);border-color:var(--pink)}.theme-options i{width:17px;height:17px;border-radius:50%;display:inline-block;flex:none}
+.pill{border:1px dashed var(--pink);border-radius:13px;padding:8px 12px;color:var(--pink);background:color-mix(in srgb, var(--pale) 65%, white)}.lock{border:0;background:var(--pink);color:white;padding:11px 17px;border-radius:13px;font-weight:800;cursor:pointer}
+main{padding:0 2.3% 28px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.panel{background:white;border:4px solid var(--pink2);border-radius:22px;box-shadow:0 4px 0 color-mix(in srgb, var(--pink2) 40%, white);padding:16px;min-width:0;overflow:hidden}
+.panel h2{text-align:center;color:var(--pink);font-size:16px;margin:0 0 16px;font-weight:900}
+.tall{min-height:340px}.wide{grid-column:span 2;min-height:220px}.full{grid-column:1/-1}
+input,textarea,select{font:inherit;color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px;width:100%;outline:none;background:#fff}input:focus,textarea:focus{border-color:var(--pink)}textarea{resize:vertical;min-height:110px}button{font:inherit}
+.addrow{display:flex;gap:8px}.addrow input{min-width:0}.add{border:0;background:var(--pink);color:#fff;border-radius:13px;padding:0 15px;font-size:22px;cursor:pointer;font-weight:800}
+.hint{font-size:12px;color:#c39aa5;margin:10px 0}.items{list-style:none;margin:12px 0 0;padding:0}.items li{display:flex;gap:9px;align-items:center;border:1px solid var(--line);border-radius:13px;padding:10px;margin:8px 0;background:color-mix(in srgb, var(--pale) 45%, white);overflow-wrap:anywhere}.items li span{flex:1}.items li.done span{text-decoration:line-through;opacity:.5}.items button{border:0;background:transparent;color:var(--pink);cursor:pointer;font-size:17px}
+.goal{display:flex;align-items:center;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;margin:8px 0;background:color-mix(in srgb, var(--pale) 45%, white);cursor:pointer}.goal span{flex:1}.goal .heart{color:var(--pink)}
+.save-row{display:flex;justify-content:flex-end;margin-top:8px}.mini-add{border:0;background:var(--pink);color:#fff;border-radius:11px;padding:8px 12px;font-weight:800;font-size:13px;cursor:pointer}.saved-entry{display:flex;align-items:flex-start;gap:8px;border:1px solid var(--line);border-radius:12px;padding:9px 10px;margin-top:7px;background:color-mix(in srgb, var(--pale) 45%, white);font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}.saved-entry .entry-text{flex:1;min-width:0}.saved-entry button{border:0;background:transparent;color:var(--pink);cursor:pointer;font-size:16px;padding:0 2px}.saved-list:empty{display:none}
+.mood{text-align:center;background:linear-gradient(180deg,#fff9fc,#fff);padding:10px;border-radius:14px}.weather-icon{font-size:42px}.big{font-size:22px;color:var(--pink);font-weight:900;margin:10px 0}.sub{font-size:13px;color:#bc9aa5}
+.weather-info{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:12px}.weather-info span{background:color-mix(in srgb, var(--pale) 75%, white);border-radius:12px;padding:8px 10px;font-size:13px}
+.planrow{display:flex;gap:8px;margin-bottom:12px}.planrow input{min-width:0}.primary{background:var(--pink);color:white;border:0;border-radius:12px;padding:11px 15px;font-weight:800;cursor:pointer;white-space:nowrap}
+.calendar-panel{background:#fff;color:var(--ink);border-color:var(--pink2);box-shadow:0 4px 0 color-mix(in srgb, var(--pink2) 40%, white)}.calendar-panel h2{color:var(--pink)}.calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;color:var(--ink)}.calendar-head button{border:1px solid var(--line);background:color-mix(in srgb, var(--pale) 75%, white);color:var(--pink);border-radius:10px;padding:6px 11px;cursor:pointer}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.dayname,.day{padding:8px 1px;text-align:center;border-radius:11px;font-size:13px;min-width:0;min-height:36px;display:flex;align-items:center;justify-content:center}.dayname{font-weight:800;color:#ce8197}.day{border:1px solid #ffe6eb;background:color-mix(in srgb, var(--pale) 45%, white);color:var(--ink);cursor:pointer}.day:hover{background:#ffe8ee}.day.selected{background:var(--pink);border-color:var(--pink);color:#fff;font-weight:900}.day.muted{color:#c7b6bc;background:#fff}.day.today{outline:2px solid var(--pink2)}.calendar-panel .calendar-note{margin-top:12px;font-size:13px;color:#c77f94}.calendar-panel .calendar-head strong{font-size:15px}
+.memory-form{display:grid;gap:10px}.memory-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.memory-meta input[type="date"]{flex:1;min-width:150px}.memory-meta input[type="file"]{display:none}.upload-label{display:inline-flex;align-items:center;justify-content:center;background:color-mix(in srgb, var(--pale) 75%, white);border:1px solid var(--line);color:#d46f8d;border-radius:12px;padding:10px 13px;cursor:pointer;font-weight:800}.upload-label:hover{background:#ffe8ef}.memory-form textarea{min-height:85px}.memory-submit{justify-self:start}.image-preview{position:relative;max-width:100%;width:max-content}.image-preview img{display:block;max-width:100%;max-height:260px;object-fit:contain;border-radius:15px;border:2px solid var(--line)}.clear-image{position:absolute;right:7px;top:7px;border:0;border-radius:50%;width:28px;height:28px;background:#fff;color:var(--pink);font-size:20px;cursor:pointer}.memory-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:14px}.memory-card{border:1px solid var(--line);background:color-mix(in srgb, var(--pale) 45%, white);border-radius:15px;overflow:hidden;min-width:0}.memory-card img{width:100%;max-height:230px;object-fit:cover;display:block;background:#fff0f4}.memory-card-body{padding:12px}.memory-card h3{font-size:15px;color:var(--pink);margin:0 0 6px;overflow-wrap:anywhere}.memory-card time{font-size:11px;color:#c39aa5}.memory-card p{font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere;margin:8px 0 0}.memory-actions{display:flex;justify-content:flex-end;margin-top:8px}.memory-actions button{border:0;background:transparent;color:#d66e8d;cursor:pointer;font-weight:800}.memory-empty{font-size:13px;color:#c39aa5;text-align:center;padding:12px;border:1px dashed var(--line);border-radius:13px}
+@media(max-width:1000px){main{grid-template-columns:repeat(2,minmax(0,1fr))}.wide{grid-column:span 1}.full{grid-column:1/-1}}
+@media(max-width:600px){main{grid-template-columns:1fr;padding:0 12px}.topbar{margin:0 12px 16px}.wide,.full{grid-column:span 1}.panel{min-height:unset}header{padding-top:20px}}
+/* Kích thước gọn theo bố cục ảnh tham khảo */
+@media(min-width:601px){
+ header{padding:18px 16px 9px}
+ h1{font-size:clamp(22px,2.5vw,30px)}
+ .topbar{margin-bottom:14px;padding:10px 16px;border-radius:20px}
+ main{gap:12px;padding-bottom:22px}
+ .panel{padding:13px;border-width:3px;border-radius:20px}
+ .panel h2{font-size:15px;margin-bottom:13px}
+ .tall{min-height:310px}
+ .wide{min-height:190px}
+ input,textarea,select{padding:10px 11px;border-radius:13px}
+ textarea{min-height:100px}
+ .add{padding:0 13px}
+ .goal{padding:10px;gap:8px;margin:7px 0}
+ .mood{padding:8px}
+ .weather-icon{font-size:36px}
+ .big{font-size:20px;margin:8px 0}
+ .weather-info{gap:8px;margin-top:9px}
+ .weather-info span{padding:7px 9px;font-size:12px}
+ .primary{padding:9px 12px}
+ .calendar-head{margin-bottom:11px}
+ .calendar-grid{gap:4px}
+ .dayname,.day{padding:7px 1px;min-height:33px;font-size:12px;border-radius:9px}
+ .memory-list{gap:9px;margin-top:12px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+ .memory-card-body{padding:10px}
+}
+@media(min-width:1001px){main{grid-template-columns:repeat(4,minmax(0,1fr))}.wide{grid-column:span 2}}
+
+.memory-top-wrap{margin:0 2.3% 12px}
+.compact-memories{padding:10px 13px!important;min-height:0!important;border-width:2px!important;border-radius:17px!important}
+.memories-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.memory-heading-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.memory-tool{font-size:12px;padding:7px 10px!important;border:1px solid var(--line);border-radius:11px;background:var(--pale);color:var(--pink);font-weight:800;cursor:pointer}.memory-tool.danger{background:var(--pink);color:#fff;border-color:var(--pink)}.memory-select{width:auto!important;accent-color:var(--pink);margin:0 5px 0 0;padding:0!important}.memory-card.selected-memory{outline:2px solid var(--pink);outline-offset:1px}.confirm-overlay{position:fixed;inset:0;z-index:1000;background:#3d26364f;display:flex;align-items:center;justify-content:center;padding:18px}.confirm-overlay[hidden]{display:none}.confirm-box{width:min(100%,350px);background:#fff;border:3px solid var(--pink2);border-radius:20px;padding:22px;text-align:center;box-shadow:0 12px 36px #55304433;color:var(--ink)}.confirm-box .confirm-icon{font-size:32px}.confirm-box h3{margin:8px 0;color:var(--pink);font-size:18px}.confirm-box p{margin:0 0 18px;font-size:14px}.confirm-buttons{display:flex;justify-content:center;gap:9px}.confirm-buttons button{border-radius:11px;padding:9px 16px;font-weight:800;cursor:pointer}.confirm-cancel{background:#fff;border:1px solid var(--line);color:var(--ink)}.confirm-delete{background:var(--pink);border:1px solid var(--pink);color:#fff}
+.memories-heading h2{margin:0!important;text-align:left!important;font-size:14px!important}
+.memory-toggle{font-size:12px;padding:7px 10px!important}
+.compact-memories .memory-form{margin-top:11px;grid-template-columns:minmax(130px,1fr) auto minmax(130px,.8fr);align-items:start;gap:8px}
+.compact-memories .memory-form[hidden]{display:none}
+.compact-memories .memory-form textarea{grid-column:1/-1;min-height:58px;max-height:100px}
+.compact-memories .memory-meta{display:contents}
+.compact-memories .memory-meta input[type="date"]{display:none}
+.compact-memories .upload-label{padding:8px 10px;font-size:12px;white-space:nowrap}
+.compact-memories .memory-submit{padding:8px 10px;font-size:12px}
+.compact-memories .image-preview{grid-column:1/-1}
+.compact-memories .image-preview img{max-height:110px}
+.compact-memories>.hint{margin:7px 0 0;font-size:11px}
+.compact-memories .memory-list{display:flex;gap:8px;overflow-x:auto;margin-top:9px;padding-bottom:2px}
+.compact-memories .memory-empty{padding:8px 10px;text-align:left;white-space:normal}
+.compact-memories .memory-card{display:grid;grid-template-columns:58px minmax(0,1fr);align-items:stretch;flex:0 0 210px;max-width:210px}
+.compact-memories .memory-card img{width:58px;height:100%;min-height:64px;max-height:90px;object-fit:cover}
+.compact-memories .memory-card-body{padding:7px;min-width:0}
+.compact-memories .memory-card h3{font-size:12px;margin-bottom:3px}
+.compact-memories .memory-card time{font-size:10px}
+.compact-memories .memory-card p{font-size:11px;margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.compact-memories .memory-actions{margin-top:3px;font-size:10px}
+@media(max-width:600px){.memory-top-wrap{margin:0 12px 12px}.compact-memories .memory-form{grid-template-columns:1fr auto}.compact-memories .memory-form textarea{grid-column:1/-1}.compact-memories .memory-card{flex-basis:190px;max-width:190px}}
+
+/* Đồng bộ lịch với màu giao diện đang chọn */
+.calendar-panel{border-color:var(--pink2)}
+.calendar-panel .calendar-head button{border-color:var(--line);background:color-mix(in srgb,var(--pale) 78%,white);color:var(--pink)}
+.calendar-panel .dayname{color:var(--pink)}
+.calendar-panel .day{border-color:var(--line);background:color-mix(in srgb,var(--pale) 52%,white);color:var(--ink)}
+.calendar-panel .day:hover{background:color-mix(in srgb,var(--pink2) 38%,white);border-color:var(--pink2)}
+.calendar-panel .day.selected{background:var(--pink);border-color:var(--pink);color:#fff}
+.calendar-panel .day.muted{color:var(--muted);background:color-mix(in srgb,var(--pale) 20%,white);border-color:var(--line)}
+.calendar-panel .day.today{outline-color:var(--pink2)}
+.calendar-panel .calendar-note{color:var(--pink)}
+
+/* Thanh điều hướng bên trái */
+.sidebar{position:fixed;z-index:50;left:0;top:0;bottom:0;width:174px;padding:18px 12px;background:#fff;border-right:2px solid var(--pink2);box-shadow:4px 0 18px color-mix(in srgb,var(--pink2) 22%,transparent);display:flex;flex-direction:column;gap:10px}
+.sidebar-brand{color:var(--pink);font-weight:900;text-align:center;font-size:16px;line-height:1.35;padding:8px 2px 16px;border-bottom:1px solid var(--line);margin-bottom:5px}
+.sidebar-link{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--pale) 50%,white);border:1px solid var(--line);border-radius:13px;padding:11px 12px;font-weight:800;font-size:14px;transition:background .15s,border-color .15s}
+.sidebar-link:hover,.sidebar-link.active{background:var(--pale);border-color:var(--pink);color:var(--pink)}
+.sidebar-icon{font-size:19px;width:22px;text-align:center;flex:none}
+.sidebar-note{margin-top:auto;color:var(--muted);font-size:11px;text-align:center;line-height:1.5;padding:8px 2px}
+.add-link-btn{display:flex;align-items:center;gap:10px;text-align:left;width:100%;border:1.5px dashed var(--pink2);border-radius:13px;padding:10px 12px;background:var(--pale);color:var(--pink);font-size:13px;font-weight:900;cursor:pointer}
+.add-link-btn:hover{border-style:solid;background:color-mix(in srgb,var(--pale) 70%,white)}
+.custom-links{display:grid;gap:7px}
+.custom-link-row{display:flex;align-items:center;gap:3px;min-width:0}
+.custom-link-row .sidebar-link{flex:1;min-width:0;padding:10px 8px;gap:7px}
+.custom-link-row .nav-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.custom-link-delete{flex:none;border:1px solid var(--line);background:var(--pale);color:var(--pink);font-size:12px;font-weight:900;padding:7px 8px;border-radius:9px;cursor:pointer;white-space:nowrap}
+.custom-link-delete:hover{color:#fff;background:var(--pink);border-color:var(--pink)}
+@media(max-width:800px){.add-link-btn{justify-content:center;padding:11px 4px}.add-link-btn .nav-label{display:none}.custom-link-row .sidebar-link{justify-content:center;padding:10px 3px}.custom-link-row .sidebar-link .nav-label{display:none}.custom-link-delete{font-size:0;padding:5px 4px}.custom-link-delete::after{content:'🗑';font-size:12px}}
+body>header,body>.topbar,body>.memory-top-wrap,body>main{margin-left:calc(174px + 2.3%)}
+body>header{padding-right:calc(18px + 1%)}
+@media(max-width:800px){.sidebar{width:62px;padding:12px 6px}.sidebar-brand{font-size:20px;white-space:nowrap;overflow:hidden}.sidebar-link{justify-content:center;padding:11px 4px}.sidebar-link .nav-label{display:none}.sidebar-note{font-size:9px;overflow-wrap:anywhere}body>header,body>.topbar,body>.memory-top-wrap,body>main{margin-left:74px}body>header{padding-right:12px}}
+@media(max-width:600px){body>header,body>.topbar,body>.memory-top-wrap,body>main{margin-left:68px}.sidebar{width:56px}.sidebar-brand{font-size:18px;padding:8px 0 12px}.sidebar-icon{font-size:18px;width:auto}body>main{padding-left:8px;padding-right:8px}.topbar{margin-right:8px!important}}
+
+
+.music-queue{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:7px}.music-queue li{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:11px;background:var(--pale);border:1px solid var(--line)}.music-queue li.current{outline:2px solid var(--pink)}.music-queue .track-play{border:0;border-radius:50%;width:30px;height:30px;background:white;color:var(--pink);cursor:pointer;flex:none}.music-queue .track-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.music-queue .track-delete{border:0;background:transparent;color:var(--pink);cursor:pointer;font-size:17px}.music-panel{grid-column:span 2}.music-form{display:flex;gap:8px;align-items:center}.music-form input{min-width:0;flex:1}.music-form .primary{width:42px;height:42px;flex:none;padding:0;font-size:25px;line-height:1;border-radius:12px}.music-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.music-frame-wrap{margin-top:12px;background:var(--pale);border:1px solid var(--line);border-radius:15px;overflow:hidden;padding:14px}.music-frame-wrap iframe{position:absolute;width:1px;height:1px;opacity:.01;pointer-events:none}.music-empty{display:grid;place-items:center;text-align:center;padding:24px;color:var(--muted);font-size:14px;min-height:90px}.music-now{font-weight:900;color:var(--ink);margin:2px 0 12px;overflow-wrap:anywhere}.music-controls{display:flex;align-items:center;gap:10px}.music-controls button{border:1px solid var(--line);background:white;color:var(--pink);border-radius:50%;width:38px;height:38px;font-size:16px;cursor:pointer;flex:none}.music-seek{min-width:0;flex:1;accent-color:var(--pink)}.music-time{font-size:11px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}.music-actions a{display:inline-block;text-decoration:none;border-radius:11px;padding:9px 12px;background:var(--pale);border:1px solid var(--line);color:var(--pink);font-size:13px;font-weight:800}
+@media(max-width:600px){.music-panel{grid-column:span 1}.music-form{flex-wrap:wrap}.music-form button{width:100%}}
+
+</style>
+</head>
+<body>
+<aside class="sidebar" aria-label="Thanh điều hướng">
+  <div class="sidebar-brand">🐾<br><span class="nav-label">LITTLE SPACE</span></div>
+  <a class="sidebar-link active" href="#home" id="homeNav"><span class="sidebar-icon">🏠</span><span class="nav-label">Home</span></a>
+  <div id="customLinks" class="custom-links" aria-label="Liên kết của bạn"></div>
+  <button type="button" id="addLinkBtn" class="add-link-btn"><span class="sidebar-icon">＋</span><span class="nav-label">Thêm liên kết</span></button>
+  <div class="sidebar-note">Một góc nhỏ<br>của riêng bạn ♡</div>
+</aside>
+<header id="home"><h1>✨ 🐾 MY LITTLE SPACE — GÓC NHỎ CỦA T ✨</h1><p>Cùng chăm chút cho cuộc sống mỗi ngày nhé~ 💕</p></header>
+<div class="topbar">
+ <div>🌷 Xin chào, <span id="greetingName">bạn</span>!</div>
+ <div id="topDate">📅 Đang tải ngày...</div>
+ <div class="top-weather" title="Thời tiết hiện tại"><span class="top-weather-icon weather-icon" id="weatherIcon">🌷</span><span class="top-weather-copy"><strong id="weatherText">Đang tải thời tiết…</strong><small id="weatherSub">Đang cập nhật...</small></span><span class="top-weather-stat" id="temp">🌡️ --°C</span><span class="top-weather-stat" id="wind">💨 -- km/h</span><button type="button" class="weather-refresh" id="weatherBtn" aria-label="Cập nhật thời tiết" title="Cập nhật thời tiết">↻</button></div>
+ <div class="pill">🕒 <span id="topClock">--:--:--</span></div>
+ <div class="theme-wrap"><button class="theme-toggle" id="themeToggle" type="button" aria-expanded="false">🎨 Đổi màu</button><div class="theme-menu" id="themeMenu" hidden><span class="theme-label">Chọn màu giao diện</span><div class="theme-options"><button type="button" data-theme-choice="pink"><i style="background:#ff7e9f"></i>Hồng</button><button type="button" data-theme-choice="lavender"><i style="background:#a58bdf"></i>Tím</button><button type="button" data-theme-choice="mint"><i style="background:#56bda5"></i>Xanh mint</button><button type="button" data-theme-choice="sky"><i style="background:#65aee8"></i>Xanh trời</button><button type="button" data-theme-choice="peach"><i style="background:#f39b70"></i>Đào</button></div></div></div><button class="lock" id="nameBtn">✏️ Đổi tên</button>
+</div>
+<div class="memory-top-wrap">
+ <section class="panel memories-panel compact-memories"><div class="memories-heading"><h2>📸 KỶ NIỆM CỦA T</h2><div class="memory-heading-actions"><button type="button" id="selectMemoriesBtn" class="memory-tool">☑ Chọn</button><button type="button" id="deleteSelectedMemoriesBtn" class="memory-tool danger" hidden>🗑 Xóa đã chọn</button><button type="button" id="deleteAllMemoriesBtn" class="memory-tool">Xóa tất cả</button><button type="button" id="toggleMemoryForm" class="primary memory-toggle">＋ Thêm kỷ niệm</button></div></div>
+   <form id="memoryForm" class="memory-form" hidden>
+    <input id="memoryTitle" maxlength="90" placeholder="Đặt tên kỷ niệm của bạn..." aria-label="Tên kỷ niệm">
+    <div class="memory-meta"><label class="upload-label" for="memoryImage">🖼️ Chọn ảnh</label><input id="memoryImage" type="file" accept="image/*"><input id="memoryDate" type="date" aria-label="Ngày kỷ niệm"></div>
+    <textarea id="memoryText" placeholder="Viết vài dòng về khoảnh khắc này..." aria-label="Nội dung kỷ niệm"></textarea>
+    <div id="imagePreview" class="image-preview" hidden><img id="previewImg" alt="Ảnh xem trước"><button type="button" id="clearImage" class="clear-image" aria-label="Bỏ ảnh">×</button></div>
+    <button class="primary memory-submit" type="submit">＋ Thêm kỷ niệm</button>
+   </form>
+   <p class="hint">Ảnh và câu chuyện của bạn được lưu trên trình duyệt này ♡</p>
+   <div id="memoryList" class="memory-list"></div>
+  </section>
+</div>
+<div id="deleteConfirmModal" class="confirm-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="deleteConfirmTitle">
+ <div class="confirm-box"><div class="confirm-icon">🥺💗</div><h3 id="deleteConfirmTitle">Bạn mún xóa đúng hem?</h3><p id="deleteConfirmText">Kỷ niệm này sẽ bị xóa khỏi trình duyệt nha.</p><div class="confirm-buttons"><button type="button" id="cancelDeleteBtn" class="confirm-cancel">Thôi, giữ lại</button><button type="button" id="confirmDeleteBtn" class="confirm-delete">Ừ, xóa</button></div></div>
+</div>
+<main>
+ <section class="panel tall"><h2>🐾 VIỆC CẦN LÀM 🐾</h2><form id="taskForm" class="addrow"><input id="taskInput" placeholder="Thêm việc cần làm..." required><button class="add" aria-label="Thêm việc">+</button></form><p class="hint">Đánh dấu khi xong, hoặc xóa việc đã thêm.</p><ul class="items" id="taskList"></ul></section>
+ <section class="panel tall"><h2>🎯 MỤC TIÊU CỦA T 🎯</h2><div class="goal"><span>📚 Học tập</span><span class="heart">♡</span></div><div class="goal"><span>🌱 Phát triển bản thân</span><span class="heart">♡</span></div><div class="goal"><span>✨ Điều muốn thử</span><span class="heart">♡</span></div><textarea id="goals" placeholder="Viết mục tiêu của bạn ở đây..."></textarea><div class="save-row"><button type="button" class="mini-add" id="addGoal">＋ Thêm mục tiêu</button></div><div id="goalItems" class="saved-list"></div><p class="hint">Viết mục tiêu rồi nhấn Thêm để lưu thành từng mục.</p></section>
+
+ <section class="panel tall"><h2>💗 GHI CHÚ NHANH 💗</h2><textarea id="notes" placeholder="Có điều gì cần nhớ hôm nay không?"></textarea><div class="save-row"><button type="button" class="mini-add" id="addNote">＋ Thêm ghi chú</button></div><div id="noteItems" class="saved-list"></div><p class="hint">Viết ghi chú rồi nhấn Thêm để lưu thành từng mục.</p></section>
+ <section class="panel wide"><h2>🗓️ KẾ HOẠCH TRONG NGÀY 🗓️</h2><form id="planForm" class="planrow"><input id="planTime" type="time" aria-label="Giờ"><input id="planText" placeholder="Ví dụ: ôn bài tiếng Trung" required><button class="primary">Thêm</button></form><ul class="items" id="planList"></ul></section>
+ <section class="panel wide calendar-panel"><h2>🌤️ LỊCH THÁNG 🌤️</h2><div class="calendar-head"><button id="prevMonth">←</button><strong id="monthLabel"></strong><button id="nextMonth">→</button></div><div class="calendar-grid" id="calendar"></div><div class="calendar-note" id="selectedDate"></div></section>
+ <section class="panel music-panel"><h2>🎧 NHẠC CỦA T 🎧</h2><form id="musicForm" class="music-form"><input id="musicUrl" type="url" placeholder="Dán link YouTube (youtube.com/watch?v=...)" aria-label="Link video YouTube" required><button class="primary music-add-btn" type="submit" aria-label="Thêm bài hát" title="Thêm bài hát">+</button></form><div class="music-actions"><a id="openMusicLink" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">▶️ Mở YouTube</a><button type="button" class="mini-add" id="clearMusic">Xóa tất cả</button></div><div id="musicPlayer" class="music-frame-wrap"><div class="music-empty">🎶 Thêm từng bài hát để tạo playlist riêng nha ♡</div></div><p class="hint">Dán link YouTube bình thường (youtube.com/watch?v=... hoặc youtu.be/...). Bài sẽ phát trong dashboard nếu video cho phép nhúng nha ♡</p></section>
+
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const todayKey=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const get=(k,fallback)=>{try{return JSON.parse(localStorage.getItem('mls_'+k))??fallback}catch{return fallback}};
+const set=(k,v)=>localStorage.setItem('mls_'+k,JSON.stringify(v));
+function tick(){const d=new Date(),time=d.toLocaleTimeString('vi-VN',{hour12:false}),date=d.toLocaleDateString('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'});$('topClock').textContent=time;$('topDate').textContent='📅 '+date.charAt(0).toUpperCase()+date.slice(1)}
+setInterval(tick,1000);tick();
+// Tùy chỉnh màu giao diện và lưu lựa chọn cho lần mở sau.
+const themeNames={pink:'Hồng',lavender:'Tím',mint:'Xanh mint',sky:'Xanh trời',peach:'Đào'};
+function applyTheme(theme){const valid=themeNames[theme]?theme:'pink';document.body.dataset.theme=valid;set('theme',valid);document.querySelectorAll('[data-theme-choice]').forEach(btn=>btn.classList.toggle('active',btn.dataset.themeChoice===valid))}
+applyTheme(get('theme','pink'));
+$('themeToggle').onclick=()=>{const menu=$('themeMenu');menu.hidden=!menu.hidden;$('themeToggle').setAttribute('aria-expanded',String(!menu.hidden))};
+document.querySelectorAll('[data-theme-choice]').forEach(btn=>btn.addEventListener('click',()=>{applyTheme(btn.dataset.themeChoice);$('themeMenu').hidden=true;$('themeToggle').setAttribute('aria-expanded','false')}));
+document.addEventListener('click',e=>{if(!e.target.closest('.theme-wrap')){$('themeMenu').hidden=true;$('themeToggle').setAttribute('aria-expanded','false')}});
+let username=get('name','bạn');function showName(){$('greetingName').textContent=username}
+$('nameBtn').onclick=()=>{const n=prompt('Bạn muốn được gọi là gì?',username);if(n&&n.trim()){username=n.trim();set('name',username);showName()}};showName();
+let tasks=get('tasks',[]);function renderTasks(){$('taskList').innerHTML='';tasks.forEach((t,i)=>{const li=document.createElement('li');if(t.done)li.className='done';const cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;cb.style.width='auto';cb.onchange=()=>{tasks[i].done=cb.checked;set('tasks',tasks);renderTasks()};const span=document.createElement('span');span.textContent=t.text;const del=document.createElement('button');del.textContent='×';del.title='Xóa';del.onclick=()=>{askMemoryDelete('Mún xóa việc cần làm này đúng hem?',()=>{tasks.splice(i,1);set('tasks',tasks);renderTasks()})};li.append(cb,span,del);$('taskList').append(li)})}
+$('taskForm').onsubmit=e=>{e.preventDefault();const v=$('taskInput').value.trim();if(v){tasks.push({text:v,done:false});set('tasks',tasks);$('taskInput').value='';renderTasks()}};renderTasks();
+let plans=get('plans',[]);function renderPlans(){$('planList').innerHTML='';plans.sort((a,b)=>a.time.localeCompare(b.time)).forEach((p,i)=>{const li=document.createElement('li');const tm=document.createElement('b');tm.textContent=p.time||'✨';tm.style.color='var(--pink)';const span=document.createElement('span');span.textContent=p.text;const del=document.createElement('button');del.textContent='×';del.onclick=()=>{askMemoryDelete('Mún xóa kế hoạch này đúng hem?',()=>{plans=plans.filter(x=>x!==p);set('plans',plans);renderPlans()})};li.append(tm,span,del);$('planList').append(li)})}
+$('planForm').onsubmit=e=>{e.preventDefault();const text=$('planText').value.trim();if(!text)return;plans.push({id:Date.now(),time:$('planTime').value,text});set('plans',plans);$('planText').value='';renderPlans()};renderPlans();
+[['goals','goals'],['notes','notes']].forEach(([id,key])=>{$(id).value=get(key,'');$(id).addEventListener('input',()=>set(key,$(id).value))});
+// Thêm nhiều mục tiêu và ghi chú riêng lẻ, lưu trên trình duyệt.
+let goalItems=get('goalItems',[]),noteItems=get('noteItems',[]);
+function renderSavedItems(kind){
+ const isGoal=kind==='goal',items=isGoal?goalItems:noteItems,list=$(isGoal?'goalItems':'noteItems');list.innerHTML='';
+ items.forEach(item=>{const row=document.createElement('div');row.className='saved-entry';const text=document.createElement('span');text.className='entry-text';text.textContent=item.text;const del=document.createElement('button');del.type='button';del.textContent='×';del.title='Xóa mục này';del.setAttribute('aria-label','Xóa mục này');del.onclick=()=>{askMemoryDelete(isGoal?'Mún xóa mục tiêu này đúng hem?':'Mún xóa ghi chú này đúng hem?',()=>{const arr=isGoal?goalItems:noteItems;const idx=arr.findIndex(x=>x.id===item.id);if(idx>=0)arr.splice(idx,1);set(isGoal?'goalItems':'noteItems',arr);renderSavedItems(kind)})};row.append(text,del);list.append(row)});
+}
+$('addGoal').onclick=()=>{const text=$('goals').value.trim();if(!text){$('goals').focus();return}goalItems.push({id:Date.now(),text});set('goalItems',goalItems);$('goals').value='';set('goals','');renderSavedItems('goal')};
+$('addNote').onclick=()=>{const text=$('notes').value.trim();if(!text){$('notes').focus();return}noteItems.push({id:Date.now(),text});set('noteItems',noteItems);$('notes').value='';set('notes','');renderSavedItems('note')};
+renderSavedItems('goal');renderSavedItems('note');
+// Kỷ niệm: mỗi mục có thể gồm tiêu đề, ngày, ảnh và nội dung.
+let memories=get('memories',[]),pendingImage='';
+$('memoryDate').value=todayKey();
+$('memoryImage').addEventListener('change',e=>{
+ const file=e.target.files&&e.target.files[0]; if(!file)return;
+ if(!file.type.startsWith('image/')){alert('M hãy chọn một tệp ảnh nhé!');e.target.value='';return}
+ if(file.size>5*1024*1024){alert('Ảnh hơi lớn rồi, m chọn ảnh dưới 5 MB nha.');e.target.value='';return}
+ const reader=new FileReader();reader.onload=()=>{pendingImage=String(reader.result);$('previewImg').src=pendingImage;$('imagePreview').hidden=false};reader.readAsDataURL(file);
+});
+$('clearImage').onclick=()=>{pendingImage='';$('memoryImage').value='';$('previewImg').removeAttribute('src');$('imagePreview').hidden=true};
+let memorySelectMode=false;
+let selectedMemoryIds=new Set();
+let pendingDeleteAction=null;
+function askMemoryDelete(message,action){
+ $('deleteConfirmText').textContent=message||'Kỷ niệm sẽ bị xóa khỏi trình duyệt nha.';
+ pendingDeleteAction=action;
+ $('deleteConfirmModal').hidden=false;
+ $('confirmDeleteBtn').focus();
+}
+function closeMemoryDelete(){ $('deleteConfirmModal').hidden=true; pendingDeleteAction=null; }
+$('cancelDeleteBtn').onclick=closeMemoryDelete;
+$('confirmDeleteBtn').onclick=()=>{const action=pendingDeleteAction;closeMemoryDelete();if(action)action()};
+$('deleteConfirmModal').addEventListener('click',e=>{if(e.target===$('deleteConfirmModal'))closeMemoryDelete()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('deleteConfirmModal').hidden)closeMemoryDelete()});
+$('selectMemoriesBtn').onclick=()=>{
+ memorySelectMode=!memorySelectMode;
+ if(!memorySelectMode)selectedMemoryIds.clear();
+ $('selectMemoriesBtn').textContent=memorySelectMode?'✕ Hủy chọn':'☑ Chọn';
+ $('deleteSelectedMemoriesBtn').hidden=!memorySelectMode;
+ renderMemories();
+};
+$('deleteSelectedMemoriesBtn').onclick=()=>{
+ if(!selectedMemoryIds.size){alert('M chọn ít nhất một kỷ niệm trước nha ♡');return}
+ const count=selectedMemoryIds.size;
+ askMemoryDelete(`Mún xóa ${count} kỷ niệm đã chọn đúng hem?`,()=>{
+  memories=memories.filter(mem=>!selectedMemoryIds.has(mem.id));selectedMemoryIds.clear();set('memories',memories);renderMemories();
+ });
+};
+$('deleteAllMemoriesBtn').onclick=()=>{
+ if(!memories.length){alert('Chưa có kỷ niệm nào để xóa hết á ♡');return}
+ askMemoryDelete(`Mún xóa hết ${memories.length} kỷ niệm đúng hem? Không thể hoàn tác đâu nha.`,()=>{
+  memories=[];selectedMemoryIds.clear();set('memories',memories);renderMemories();
+ });
+};
+function renderMemories(){
+ const list=$('memoryList');list.innerHTML='';
+ if(!memories.length){const empty=document.createElement('div');empty.className='memory-empty';empty.textContent='Chưa có kỷ niệm nào — thêm một khoảnh khắc đáng nhớ đầu tiên nhé ♡';list.append(empty);return}
+ memories.slice().reverse().forEach(mem=>{
+  const card=document.createElement('article');card.className='memory-card';if(selectedMemoryIds.has(mem.id))card.classList.add('selected-memory');
+  if(mem.image){const img=document.createElement('img');img.src=mem.image;img.alt=mem.title||'Ảnh kỷ niệm';card.append(img)}
+  const body=document.createElement('div');body.className='memory-card-body';
+  if(memorySelectMode){const select=document.createElement('input');select.type='checkbox';select.className='memory-select';select.checked=selectedMemoryIds.has(mem.id);select.setAttribute('aria-label','Chọn kỷ niệm '+(mem.title||''));select.onchange=()=>{if(select.checked)selectedMemoryIds.add(mem.id);else selectedMemoryIds.delete(mem.id);card.classList.toggle('selected-memory',select.checked)};body.append(select)}
+  const title=document.createElement('h3');title.textContent=mem.title||'Một kỷ niệm nhỏ ♡';body.append(title);
+  const date=document.createElement('time');date.textContent=mem.date?new Date(mem.date+'T12:00:00').toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric'}):'Không ghi ngày';body.append(date);
+  if(mem.text){const para=document.createElement('p');para.textContent=mem.text;body.append(para)}
+  const actions=document.createElement('div');actions.className='memory-actions';const del=document.createElement('button');del.type='button';del.textContent='🗑 Xóa';del.onclick=()=>{askMemoryDelete('Mún xóa kỷ niệm này đúng hem?',()=>{memories=memories.filter(x=>x.id!==mem.id);selectedMemoryIds.delete(mem.id);set('memories',memories);renderMemories()})};actions.append(del);body.append(actions);card.append(body);list.append(card);
+ });
+}
+$('memoryForm').onsubmit=async e=>{
+ e.preventDefault();const title=$('memoryTitle').value.trim(),text=$('memoryText').value.trim();
+ if(!title&&!text&&!pendingImage){alert('Thêm ít nhất một dòng chữ hoặc một tấm ảnh nha ♡');return}
+ memories.push({id:Date.now(),title,text,date:$('memoryDate').value||todayKey(),image:pendingImage});
+ try{set('memories',memories)}catch(err){memories.pop();alert('Bộ nhớ trình duyệt đã đầy. M thử ảnh nhỏ hơn nhé.');return}
+ $('memoryTitle').value='';$('memoryText').value='';$('memoryDate').value=todayKey();$('memoryImage').value='';pendingImage='';$('imagePreview').hidden=true;$('previewImg').removeAttribute('src');renderMemories();
+};
+renderMemories();
+$('toggleMemoryForm').onclick=()=>{const form=$('memoryForm');form.hidden=!form.hidden;$('toggleMemoryForm').textContent=form.hidden?'＋ Thêm kỷ niệm':'－ Thu gọn';if(!form.hidden)$('memoryTitle').focus()};
+document.querySelectorAll('.goal').forEach(el=>el.onclick=()=>{el.classList.toggle('chosen');el.querySelector('.heart').textContent=el.classList.contains('chosen')?'♥':'♡';let chosen=get('chosenGoals',[]),label=el.querySelector('span').textContent;if(el.classList.contains('chosen')){if(!chosen.includes(label))chosen.push(label)}else chosen=chosen.filter(x=>x!==label);set('chosenGoals',chosen)});
+get('chosenGoals',[]).forEach(label=>{document.querySelectorAll('.goal').forEach(el=>{if(el.querySelector('span').textContent===label){el.classList.add('chosen');el.querySelector('.heart').textContent='♥'}})});
+let viewDate=new Date(),selected=todayKey();const weekdays=['T2','T3','T4','T5','T6','T7','CN'];
+function renderCalendar(){const y=viewDate.getFullYear(),m=viewDate.getMonth();$('monthLabel').textContent=`Tháng ${m+1}, ${y}`;$('calendar').innerHTML='';weekdays.forEach(x=>{const e=document.createElement('div');e.className='dayname';e.textContent=x;$('calendar').append(e)});const first=new Date(y,m,1),offset=(first.getDay()+6)%7,days=new Date(y,m+1,0).getDate(),prevDays=new Date(y,m,0).getDate();for(let i=0;i<42;i++){let dayNum=i-offset+1,d;if(dayNum<1)d=new Date(y,m-1,prevDays+dayNum);else if(dayNum>days)d=new Date(y,m+1,dayNum-days);else d=new Date(y,m,dayNum);const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`,el=document.createElement('button');el.className='day';el.textContent=d.getDate();if(d.getMonth()!==m)el.classList.add('muted');if(key===todayKey())el.classList.add('today');if(key===selected)el.classList.add('selected');el.onclick=()=>{selected=key;renderCalendar()};$('calendar').append(el)}$('selectedDate').textContent='💗 Ngày đang chọn: '+new Date(selected+'T12:00:00').toLocaleDateString('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',year:'numeric'})}
+$('prevMonth').onclick=()=>{viewDate.setMonth(viewDate.getMonth()-1);renderCalendar()};$('nextMonth').onclick=()=>{viewDate.setMonth(viewDate.getMonth()+1);renderCalendar()};renderCalendar();
+async function loadWeather(lat=10.8231,lon=106.6297,place='TP. Hồ Chí Minh'){try{ $('weatherSub').textContent='Đang cập nhật thời tiết...';const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=auto`);if(!r.ok)throw Error();const data=await r.json(),c=data.current,code=c.weather_code;let desc='Trời dễ chịu',icon='🌤️';if(code===0){desc='Trời quang đãng';icon='☀️'}else if([1,2,3].includes(code)){desc='Có mây';icon='⛅'}else if([45,48].includes(code)){desc='Có sương mù';icon='🌫️'}else if([51,53,55,61,63,65,80,81,82].includes(code)){desc='Có mưa';icon='🌧️'}else if([71,73,75,77,85,86].includes(code)){desc='Có tuyết';icon='❄️'}else if([95,96,99].includes(code)){desc='Có dông';icon='⛈️'}$('weatherIcon').textContent=icon;$('weatherText').textContent=desc+' ♡';$('weatherSub').textContent=`${place} · Cảm giác như ${Math.round(c.apparent_temperature)}°C · Độ ẩm ${c.relative_humidity_2m}%`;$('temp').textContent=`🌡️ ${Math.round(c.temperature_2m)}°C`;$('wind').textContent=`💨 ${Math.round(c.wind_speed_10m)} km/h`}catch(e){$('weatherText').textContent='Chưa lấy được thời tiết';$('weatherSub').textContent='Kiểm tra kết nối mạng rồi thử cập nhật lại nhé.';$('temp').textContent='🌡️ --°C';$('wind').textContent='💨 -- km/h'}}
+function updateWeather(){if(navigator.geolocation){navigator.geolocation.getCurrentPosition(p=>loadWeather(p.coords.latitude,p.coords.longitude,'Vị trí của bạn'),()=>loadWeather(),{timeout:5000})}else loadWeather()}$('weatherBtn').onclick=updateWeather;updateWeather();
+
+// Điều hướng thanh bên: Home về trang chính; các dịch vụ mở trong tab mới.
+const homeNav=$('homeNav');
+if(homeNav) homeNav.addEventListener('click',()=>{document.querySelectorAll('.sidebar-link').forEach(a=>a.classList.remove('active'));homeNav.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});});
+document.querySelectorAll('.sidebar-link[target="_blank"]').forEach(link=>link.addEventListener('click',()=>{document.querySelectorAll('.sidebar-link').forEach(a=>a.classList.remove('active'));link.classList.add('active');}));
+
+// Người dùng tự thêm liên kết bằng tên + URL; danh sách được lưu trong trình duyệt.
+let customLinks=get('customLinks',null);
+if(!Array.isArray(customLinks)){customLinks=[
+ {id:'default-youtube',name:'YouTube',url:'https://www.youtube.com/',icon:'▶️'},
+ {id:'default-iqiyi',name:'iQIYI',url:'https://www.iq.com/',icon:'🎬'},
+ {id:'default-facebook',name:'Facebook',url:'https://www.facebook.com/',icon:'📘'},
+ {id:'default-instagram',name:'Instagram',url:'https://www.instagram.com/',icon:'📸'},
+ {id:'default-wattpad',name:'Wattpad',url:'https://www.wattpad.com/',icon:'📚'}
+];set('customLinks',customLinks)}
+function renderCustomLinks(){
+ const host=$('customLinks');host.innerHTML='';
+ customLinks.forEach(item=>{
+  const row=document.createElement('div');row.className='custom-link-row';
+  const a=document.createElement('a');a.className='sidebar-link';a.href=item.url;a.target='_blank';a.rel='noopener noreferrer';a.title=item.name;
+  const ico=document.createElement('span');ico.className='sidebar-icon';ico.textContent=item.icon||'🔗';
+  const label=document.createElement('span');label.className='nav-label';label.textContent=item.name;
+  a.append(ico,label);a.addEventListener('click',()=>{document.querySelectorAll('.sidebar-link').forEach(x=>x.classList.remove('active'));a.classList.add('active')});
+  const del=document.createElement('button');del.type='button';del.className='custom-link-delete';del.textContent='🗑 Xóa';del.title='Xóa liên kết';del.setAttribute('aria-label','Xóa '+item.name);
+  del.onclick=()=>{if(confirm('Bạn mún xóa liên kết này đúng hem?')){customLinks=customLinks.filter(x=>x.id!==item.id);set('customLinks',customLinks);renderCustomLinks()}};
+  row.append(a,del);host.append(row);
+ });
+}
+$('addLinkBtn').addEventListener('click',()=>{
+ const name=prompt('Đặt tên cho liên kết (ví dụ: Pinterest):');if(!name||!name.trim())return;
+ let url=prompt('Dán URL trang web muốn mở:','https://');if(!url||!url.trim())return;url=url.trim();
+ if(!/^https?:\/\//i.test(url))url='https://'+url;
+ try{const parsed=new URL(url);if(!['http:','https:'].includes(parsed.protocol))throw new Error('invalid');url=parsed.href}catch{alert('URL chưa hợp lệ, m kiểm tra lại nha ♡');return}
+ const icon=prompt('Chọn emoji cho nút (bỏ trống nếu không cần):','🔗')||'🔗';
+ customLinks.push({id:Date.now(),name:name.trim().slice(0,40),url,icon:icon.trim().slice(0,6)||'🔗'});
+ set('customLinks',customLinks);renderCustomLinks();
+});
+renderCustomLinks();
+
+// Danh sách bài hát riêng: lưu từng link trong trình duyệt.
+let ytApiReady=false,ytPlayer=null,ytReadyQueue=null,ytTimer=null;
+const starterTracks=[
+ {videoId:'G4waJ4tZfLM',url:'https://www.youtube.com/watch?v=G4waJ4tZfLM',title:'แสงแรก - Ongsa Theethuch | The Edge of Horizon OST'},
+ {videoId:'AM_Evqbua10',url:'https://www.youtube.com/watch?v=AM_Evqbua10',title:'Por Suppakarn - บทเพลงที่ตามหา (Found)'},
+ {videoId:'F1FBfE47Myk',url:'https://www.youtube.com/watch?v=F1FBfE47Myk',title:'เวลา - Qin (Por Suppakarn) | Duang With You'},
+ {videoId:'sevERDj4naU',url:'https://www.youtube.com/watch?v=sevERDj4naU',title:'Por Suppakarn - ใกล้ใจ | Your Sky Series'}
+];
+let musicTracks=[];try{const saved=localStorage.getItem('mls_musicTracks');musicTracks=saved?JSON.parse(saved):[];if(!Array.isArray(musicTracks))musicTracks=[];const known=new Set(musicTracks.map(t=>t.videoId));starterTracks.forEach(t=>{if(!known.has(t.videoId))musicTracks.unshift(t)});localStorage.setItem('mls_musicTracks',JSON.stringify(musicTracks))}catch{musicTracks=starterTracks.slice()}
+let currentTrack=0;
+function loadYouTubeAPI(){
+ if(window.YT&&window.YT.Player){ytApiReady=true;if(ytReadyQueue)ytReadyQueue();return}
+ if(!document.querySelector('script[data-youtube-api]')){const tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';tag.dataset.youtubeApi='1';document.head.append(tag)}
+ const old=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=function(){if(old)old();ytApiReady=true;if(ytReadyQueue)ytReadyQueue()};
+}
+function fmtTime(sec){if(!Number.isFinite(sec)||sec<0)sec=0;return Math.floor(sec/60)+':'+String(Math.floor(sec%60)).padStart(2,'0')}
+function saveMusic(){localStorage.setItem('mls_musicTracks',JSON.stringify(musicTracks))}
+function getVideoId(url){const u=new URL(url);if(u.hostname==='youtu.be')return u.pathname.split('/').filter(Boolean)[0];if(!/(^|\.)youtube\.com$/i.test(u.hostname))return null;return u.searchParams.get('v')||u.pathname.match(/\/embed\/([^/]+)/)?.[1]||u.pathname.match(/\/shorts\/([^/]+)/)?.[1]||null}
+function drawMusicQueue(){const player=$('musicPlayer');player.querySelectorAll('.music-queue').forEach(n=>n.remove());if(!musicTracks.length)return;let list=player.querySelector('.music-queue');if(!list){list=document.createElement('ul');list.className='music-queue';player.append(list)}list.innerHTML='';musicTracks.forEach((t,i)=>{const li=document.createElement('li');if(i===currentTrack)li.classList.add('current');const play=document.createElement('button');play.className='track-play';play.type='button';play.textContent=i===currentTrack?'♫':'▶';play.title='Phát nhúng bài này';play.onclick=()=>playTrack(i);const name=document.createElement('button');name.className='track-name';name.type='button';name.textContent=t.displayTitle||t.title||('Bài hát '+(i+1));name.title='Phát trong dashboard';name.style.cssText='background:none;border:0;color:inherit;cursor:pointer;text-align:left;font:inherit;flex:1';name.addEventListener('click',()=>playTrack(i));const del=document.createElement('button');del.className='track-delete';del.type='button';del.textContent='×';del.title='Xóa bài';del.onclick=()=>{musicTracks.splice(i,1);if(currentTrack>=musicTracks.length)currentTrack=Math.max(0,musicTracks.length-1);saveMusic();renderMusicPlayer()};li.append(play,name,del);list.append(li)})}
+function renderMusicPlayer(){const player=$('musicPlayer');if(ytTimer){clearInterval(ytTimer);ytTimer=null}if(ytPlayer){try{ytPlayer.destroy()}catch{}ytPlayer=null}player.innerHTML='';if(!musicTracks.length){player.innerHTML='<div class="music-empty">🎶 Thêm từng bài hát để tạo playlist riêng nha ♡</div>';return}const t=musicTracks[currentTrack]||musicTracks[0];const mount=document.createElement('div');mount.id='ytPlayerMount';mount.style.cssText='width:100%;aspect-ratio:16/9;max-height:360px;overflow:hidden;border-radius:14px;background:#f6dce7';player.append(mount);const title=document.createElement('div');title.className='music-now';title.id='musicTrackTitle';title.textContent='🎵 '+(t.displayTitle||t.title||'Chọn phát trên YouTube ♡');player.append(title);drawMusicQueue();loadYouTubeAPI();const makePlayer=()=>{if(!document.getElementById('ytPlayerMount')||!musicTracks[currentTrack])return;ytPlayer=new YT.Player('ytPlayerMount',{width:'100%',height:'360',videoId:musicTracks[currentTrack].videoId,playerVars:{playsinline:1,controls:1,rel:0,origin:location.origin},events:{onReady:e=>{try{const data=e.target.getVideoData(),name=data.title,artist=data.author;if(name){musicTracks[currentTrack].title=name;musicTracks[currentTrack].artist=artist||'';musicTracks[currentTrack].displayTitle=artist?name+' - '+artist:name;saveMusic();title.textContent='🎵 '+musicTracks[currentTrack].displayTitle;drawMusicQueue()}}catch{}},onStateChange:e=>{if(e.data===1){try{const data=e.target.getVideoData(),name=data.title,artist=data.author;if(name){musicTracks[currentTrack].title=name;musicTracks[currentTrack].artist=artist||'';musicTracks[currentTrack].displayTitle=artist?name+' - '+artist:name;saveMusic();title.textContent='🎵 '+musicTracks[currentTrack].displayTitle;drawMusicQueue()}}catch{}}},onError:()=>{title.textContent='Video này không cho nhúng 😿 Thử bài khác nha ♡'}}})};ytReadyQueue=makePlayer;if(ytApiReady)makePlayer()}
+function playTrack(i){if(i<0||i>=musicTracks.length)return;currentTrack=i;renderMusicPlayer()}
+$('musicForm').addEventListener('submit',e=>{e.preventDefault();const url=$('musicUrl').value.trim();try{const u=new URL(url);if(!['http:','https:'].includes(u.protocol)||!(/(^|\.)youtube\.com$/i.test(u.hostname)||u.hostname==='youtu.be'))throw new Error();const videoId=getVideoId(url);if(!videoId)throw new Error();if(musicTracks.some(t=>t.videoId===videoId)){alert('Bài này có trong danh sách rồi nè ♡');return}const embedUrl='https://www.youtube.com/watch?v='+videoId;musicTracks.push({videoId,url:embedUrl,title:''});currentTrack=musicTracks.length-1;saveMusic();$('musicUrl').value='';renderMusicPlayer()}catch{alert('M dán link video YouTube dạng youtube.com/watch?v=... hoặc youtu.be/... nha ♡')}});
+$('clearMusic').addEventListener('click',()=>{if(confirm('Xóa tất cả bài hát đã lưu nha?')){musicTracks=[];currentTrack=0;saveMusic();renderMusicPlayer()}});
+$('openMusicLink').href='https://www.youtube.com/';renderMusicPlayer();
+
+</script>
+</body></html>
